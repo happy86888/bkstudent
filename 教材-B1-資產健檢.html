@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>B1 · 資產健檢 ⭐｜BK 投資筆記</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ===== Hero ===== */
+  .stage-hero {
+    background: linear-gradient(135deg, var(--bg-darker) 0%, var(--forest) 60%, var(--forest-deep) 100%);
+    color: #fff;
+    padding: 80px 36px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage-hero::before {
+    content: "";
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(212,180,106,0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .stage-hero-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .stage-eyebrow {
+    color: var(--gold-bright);
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .stage-icon {
+    font-size: 56px;
+    margin-bottom: 12px;
+    line-height: 1;
+  }
+  .stage-hero h1 {
+    color: #fff;
+    font-size: 42px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    font-weight: 800;
+  }
+  @media (max-width: 640px) { .stage-hero { padding: 60px 22px 50px; } .stage-hero h1 { font-size: 30px; } }
+  .stage-subtitle {
+    font-size: 17px;
+    color: var(--gold-bright);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  .stage-summary {
+    font-size: 16px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+    max-width: 660px;
+  }
+
+  /* ===== Stage breadcrumb ===== */
+  .stage-nav {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 36px;
+  }
+  .stage-nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-size: 13px;
+  }
+  .stage-nav a {
+    color: var(--ink-3);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  .stage-nav a:hover { background: var(--bg-soft); color: var(--primary); }
+  .stage-nav a.current { background: var(--primary); color: #fff; font-weight: 700; }
+  .stage-nav .arrow { color: var(--ink-3); margin: 0 4px; }
+
+  /* ===== Status banner ===== */
+  .status-banner {
+    background: var(--gold-soft);
+    border-left: 5px solid var(--gold-deep);
+    padding: 18px 24px;
+    border-radius: 0 6px 6px 0;
+    margin: 32px 0;
+  }
+  .status-banner .sb-title {
+    color: var(--gold-deep);
+    font-weight: 800;
+    margin-bottom: 6px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+  }
+  .status-banner p { margin: 0; line-height: 1.7; color: var(--ink-2); font-size: 15px; }
+
+  /* ===== Section cards ===== */
+  .section-list {
+    margin: 32px 0;
+  }
+  .section-card {
+    display: flex;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    transition: all 0.2s;
+  }
+  .section-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(13,58,35,0.08);
+  }
+  .section-card .sc-num {
+    flex: 0 0 80px;
+    background: linear-gradient(135deg, var(--forest), var(--forest-deep));
+    color: var(--gold-bright);
+    font-size: 28px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, serif;
+  }
+  @media (max-width: 600px) {
+    .section-card { flex-direction: column; }
+    .section-card .sc-num { flex: 0 0 60px; padding: 14px; font-size: 22px; }
+  }
+  .section-card .sc-body { padding: 22px 26px; flex: 1; }
+  @media (max-width: 600px) { .section-card .sc-body { padding: 18px 22px; } }
+  .section-card .sc-title {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .status-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .status-badge.partial {
+    background: var(--ok-soft);
+    color: #4a7a3e;
+  }
+  .status-badge.pending {
+    background: var(--bg-soft);
+    color: var(--ink-3);
+  }
+  .section-card .sc-desc {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+
+  /* ===== Content area ===== */
+  .content-section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 36px;
+  }
+  @media (max-width: 640px) { .content-section { padding: 48px 22px; } }
+
+  /* ===== Stage navigation (bottom) ===== */
+  .stage-pager {
+    display: flex;
+    gap: 16px;
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .stage-pager a {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 22px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+  }
+  .stage-pager a:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .stage-pager .pager-label {
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  .stage-pager .pager-title {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .stage-pager .next { text-align: right; }
+  .stage-pager a.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* ===== LINE CTA ===== */
+  .stage-cta {
+    background: linear-gradient(135deg, var(--bg-darker) 0%, var(--forest) 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 36px 32px;
+    margin-top: 48px;
+    text-align: center;
+  }
+  .stage-cta h3 { color: #fff; margin: 0 0 10px; font-size: 22px; }
+  .stage-cta p { color: rgba(255,255,255,0.85); margin: 0 0 22px; line-height: 1.7; }
+  .stage-cta .cta-btn {
+    background: var(--gold);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 15px;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .stage-cta .cta-btn:hover {
+    background: var(--gold-bright);
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOP NAV ===== -->
+<nav class="topnav">
+  <a href="index.html" class="brand">
+    <div class="brand-mark">BK</div>
+    <div class="brand-text">BK 投資筆記<small>配置者養成 學員專區</small></div>
+  </a>
+  <div class="nav-links desktop">
+    <a href="index.html" class="nav-link" data-page="index">首頁</a>
+    <div class="nav-dropdown">
+      <a href="#" class="nav-link" data-page="textbook" onclick="event.preventDefault();">教材 ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="教材-B0-想成為.html" class="nav-dropdown-item">
+          <span class="item-icon">🌱</span>B0 · 想成為
+          <span class="item-desc">直播前 4-6 週 · 預備期</span>
+        </a>
+        <a href="教材-B1-資產健檢.html" class="nav-dropdown-item">
+          <span class="item-icon">📊</span>B1 · 資產健檢 ⭐
+          <span class="item-desc">Day 1-7 最關鍵</span>
+        </a>
+        <a href="教材-B2-身份轉換.html" class="nav-dropdown-item">
+          <span class="item-icon">🔄</span>B2 · 身份轉換
+          <span class="item-desc">第 4-8 週</span>
+        </a>
+        <a href="教材-B3-第一筆配置.html" class="nav-dropdown-item">
+          <span class="item-icon">💼</span>B3 · 第一筆配置
+          <span class="item-desc">課程後 1/3 段</span>
+        </a>
+        <a href="教材-B4-結業資產.html" class="nav-dropdown-item">
+          <span class="item-icon">🎯</span>B4 · 結業資產
+          <span class="item-desc">結業時</span>
+        </a>
+        <a href="教材-B5-學員飛輪.html" class="nav-dropdown-item">
+          <span class="item-icon">🚀</span>B5 · 學員飛輪
+          <span class="item-desc">結業後 6 個月+</span>
+        </a>
+      </div>
+    </div>
+    <a href="作業區.html" class="nav-link" data-page="homework">作業區</a>
+    <a href="index.html#methodology" class="nav-link">心法</a>
+    <a href="index.html#community" class="nav-link">社群</a>
+    <a href="https://lin.ee/6PuIdSx" class="nav-link nav-cta" target="_blank" rel="noopener noreferrer">LINE</a>
+  </div>
+  <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mob-section">總覽</div>
+  <a href="index.html" class="nav-link">首頁</a>
+  <div class="mob-section">配置者養成 6 階段</div>
+  <a href="教材-B0-想成為.html" class="nav-link">🌱 B0 · 想成為</a>
+  <a href="教材-B1-資產健檢.html" class="nav-link">📊 B1 · 資產健檢 ⭐</a>
+  <a href="教材-B2-身份轉換.html" class="nav-link">🔄 B2 · 身份轉換</a>
+  <a href="教材-B3-第一筆配置.html" class="nav-link">💼 B3 · 第一筆配置</a>
+  <a href="教材-B4-結業資產.html" class="nav-link">🎯 B4 · 結業資產</a>
+  <a href="教材-B5-學員飛輪.html" class="nav-link">🚀 B5 · 學員飛輪</a>
+  <div class="mob-section">交作業</div>
+  <a href="作業區.html" class="nav-link">📝 作業區</a>
+  <div class="mob-section">其他</div>
+  <a href="index.html#methodology" class="nav-link">心法</a>
+  <a href="index.html#community" class="nav-link">社群</a>
+  <a href="https://lin.ee/6PuIdSx" class="nav-link nav-cta" target="_blank" rel="noopener noreferrer">加入 LINE 學員社群</a>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobileMenu');
+  const hamb = document.querySelector('.hamburger');
+  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !hamb.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+const path = window.location.pathname.split('/').pop();
+document.querySelectorAll('.nav-link[data-page]').forEach(el => {
+  if ((el.dataset.page === 'index' && (path === '' || path === 'index.html')) ||
+      (el.dataset.page === 'textbook' && path.startsWith('教材-')) ||
+      (el.dataset.page === 'homework' && path === '作業區.html')) {
+    el.classList.add('active');
+  }
+});
+</script>
+
+
+<!-- ===== HERO ===== -->
+<section class="stage-hero">
+  <div class="stage-hero-inner">
+    <div class="stage-eyebrow">階段 1 · Day 1-7 最關鍵</div>
+    <div class="stage-icon">📊</div>
+    <h1>B1 · 資產健檢 ⭐</h1>
+    <div class="stage-subtitle">6 個月旅程最關鍵的第一週</div>
+    <p class="stage-summary">「我的資產健檢表」範本(類別 A 現金/活存、B 股票 ETF、C 基金保險、D 房產)+ Day 7 公開亮相日。</p>
+  </div>
+</section>
+
+<!-- ===== Stage breadcrumb ===== -->
+<div class="stage-nav">
+  <div class="stage-nav-inner">
+    <a href="教材-B0-想成為.html" >B0</a><span class="arrow">→</span><a href="教材-B1-資產健檢.html" class="current">B1</a><span class="arrow">→</span><a href="教材-B2-身份轉換.html" >B2</a><span class="arrow">→</span><a href="教材-B3-第一筆配置.html" >B3</a><span class="arrow">→</span><a href="教材-B4-結業資產.html" >B4</a><span class="arrow">→</span><a href="教材-B5-學員飛輪.html" >B5</a>
+  </div>
+</div>
+
+<!-- ===== Status banner ===== -->
+<section class="content-section">
+  <div class="status-banner">
+    <div class="sb-title">💬 個人化諮詢</div>
+    <p><strong>B1 · 資產健檢 ⭐</strong> 階段共有 4 個重點區塊。每個區塊的具體做法會依學員的資產規模、家庭階段、風險承受度而異——直接 LINE BK 老師、針對你的個人情況做 1對1 諮詢。</p>
+  </div>
+
+  <h2>本階段 4 個重點區塊</h2>
+  <div class="section-list">
+    
+    <div class="section-card">
+      <div class="sc-num">01</div>
+      <div class="sc-body">
+        <h3 class="sc-title">STEP 1-1 第一週唯一任務:我的資產健檢表</h3>
+        <span class="status-badge partial">✅ 已有截圖內容、待整合</span>
+        <p class="sc-desc">這個區塊的內容會依每位學員的資產規模、家庭階段、風險承受度做調整。建議直接 LINE BK 老師,針對你的個人情況做 1對1 諮詢。</p>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="sc-num">02</div>
+      <div class="sc-body">
+        <h3 class="sc-title">STEP 1-2 Day 7 公開亮相日</h3>
+        <span class="status-badge partial">✅ 已有截圖內容、待整合</span>
+        <p class="sc-desc">這個區塊的內容會依每位學員的資產規模、家庭階段、風險承受度做調整。建議直接 LINE BK 老師,針對你的個人情況做 1對1 諮詢。</p>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="sc-num">03</div>
+      <div class="sc-body">
+        <h3 class="sc-title">為什麼第一週「只能做這件事」</h3>
+        <span class="status-badge pending">依個人情況跟 BK 諮詢</span>
+        <p class="sc-desc">這個區塊的內容會依每位學員的資產規模、家庭階段、風險承受度做調整。建議直接 LINE BK 老師,針對你的個人情況做 1對1 諮詢。</p>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="sc-num">04</div>
+      <div class="sc-body">
+        <h3 class="sc-title">BK 親自批改的 5 種常見資產散亂模式</h3>
+        <span class="status-badge pending">依個人情況跟 BK 諮詢</span>
+        <p class="sc-desc">這個區塊的內容會依每位學員的資產規模、家庭階段、風險承受度做調整。建議直接 LINE BK 老師,針對你的個人情況做 1對1 諮詢。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINE CTA -->
+  <div class="stage-cta">
+    <h3>有問題?直接問 BK 老師</h3>
+    <p>每個學員的資產規模、家庭階段、風險承受度都不同——別等教材完整、有問題現在就 LINE 老師討論。</p>
+    <a href="https://lin.ee/6PuIdSx" class="cta-btn" target="_blank" rel="noopener noreferrer">💬 加入 LINE 諮詢</a>
+  </div>
+
+  <!-- Pager -->
+  <div class="stage-pager">
+    <a href="教材-B0-想成為.html"><div class="pager-label">← 上一階段</div><div class="pager-title">B0 · 想成為</div></a><a href="教材-B2-身份轉換.html" class="next"><div class="pager-label">下一階段 →</div><div class="pager-title">B2 · 身份轉換</div></a>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="site">
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <div class="ft-logo">
+        <div class="ft-logo-mark">BK</div>
+        <div class="ft-name">BK 投資筆記</div>
+      </div>
+      <p>從「焦慮散戶」走到「全球配置者」、從「看盤跟單」走到「自動提領系統」。BK 7 年實戰經驗濃縮的配置者方法論。</p>
+    </div>
+    <div class="ft-col">
+      <h4>教材</h4>
+      <ul>
+        <li><a href="教材-B0-想成為.html">B0 · 想成為</a></li>
+        <li><a href="教材-B1-資產健檢.html">B1 · 資產健檢</a></li>
+        <li><a href="教材-B2-身份轉換.html">B2 · 身份轉換</a></li>
+        <li><a href="教材-B3-第一筆配置.html">B3 · 第一筆配置</a></li>
+        <li><a href="教材-B4-結業資產.html">B4 · 結業資產</a></li>
+        <li><a href="教材-B5-學員飛輪.html">B5 · 學員飛輪</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>連結</h4>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="作業區.html">作業區</a></li>
+        <li><a href="index.html#community">社群</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© BK 投資筆記 · 配置者養成</span>
+    <span>本教材僅供正課學員使用、請勿轉發</span>
+  </div>
+</footer>
+
+<a href="#" class="back-top" title="回到頂端" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑</a>
+
+</body>
+</html>
